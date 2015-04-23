@@ -37,11 +37,11 @@ namespaced('my', [':local', 'global'])  // 'my-local global'
 ```js
 var css = namespaced('my')
 css(':bar')                                 // 'my-bar'
-css(':bar', 'zot')                          // 'my-bar  zot'
-css([':bar', 'zot'])                        // 'my-bar  zot'
+css(':bar', 'zot')                          // 'my-bar zot'
+css([':bar', 'zot'])                        // 'my-bar zot'
 css(null && ':bar')                         // ''
 css(false || ':bar')                        // 'my-bar'
-css('foo', true && ':bar', false && ':zot') // 'foo my-zot'
+css('foo', true && ':bar', false && ':zot') // 'foo my-bar'
 ```
 
 
@@ -51,16 +51,16 @@ css('foo', true && ':bar', false && ':zot') // 'foo my-zot'
 var styles = namespaced('my', {
   foo: ':foo',                                         // 'my-foo'
   bar: 'bar',                                          // 'bar'
-  zot: [':zot', bar, false && ':foo'],                 // 'my-zot bar'
+  zot: [':zot', 'bar', false && ':foo'],               // 'my-zot bar'
   qux: 'bar :foo :zot',                                // 'bar my-foo my-zot'
   nested: {
     stuff: ['bar', ':stuff']                           // 'bar my-stuff'
   },
-  fun: function(o) { return ':important-' + o.type; }
+  fun: function(o) { return ':important-' + o.key; }
 });
 
 styles.foo               // 'my-foo'
-styles.nested.foo        // 'bar my-stuff'
+styles.nested.stuff      // 'bar my-stuff'
 styles.fun({key: 'foo'}) // 'my-important-foo'
 
 ```

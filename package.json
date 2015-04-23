@@ -1,6 +1,6 @@
 {
   "name": "namespaced",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Namespace your css class names easily",
   "main": "index.js",
   "scripts": {

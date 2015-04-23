@@ -63,5 +63,39 @@ describe('namespaced', function() {
     assert.equal('biff',        a.nes.biff);
     assert.equal('my-buff',     a.nes.buff);
   });
+  it('should works as advertised', function() {
+    // one liners
+    assert.equal('my-local', namespaced('my', ':local'));
+    assert.equal('my-local global', namespaced('my', ':local', 'global'));
+    assert.equal('my-local global', namespaced('my', [':local', 'global']));
+
+    // curreid
+    var css = namespaced('my')
+    assert.equal('my-bar', css(':bar'));
+    assert.equal('my-bar zot', css(':bar', 'zot'));
+    assert.equal('my-bar zot', css([':bar', 'zot']));
+    assert.equal('', css(null && ':bar'));
+    assert.equal('my-bar', css(false || ':bar'));
+    assert.equal('foo my-bar', css('foo', true && ':bar', false && ':zot'));
+
+    // styles object
+    var styles = namespaced('my', {
+      foo: ':foo',
+      bar: 'bar',
+      zot: [':zot', 'bar', false && ':foo'],
+      qux: 'bar :foo :zot',
+      nested: {
+        stuff: ['bar', ':stuff']
+      },
+      fun: function(o) { return ':important-' + o.key; }
+    });
+
+    assert.equal('my-foo', styles.foo);
+    assert.equal('bar', styles.bar);
+    assert.equal('my-zot bar', styles.zot);
+    assert.equal('bar my-foo my-zot', styles.qux);
+    assert.equal('bar my-stuff', styles.nested.stuff);
+    assert.equal('my-important-foo', styles.fun({key: 'foo'}));
+  });
 });
 
