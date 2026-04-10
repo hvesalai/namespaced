@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/hvesalai/namespaced",
   "dependencies": {
-    "lodash": ">=4.17.21"
+    "lodash": "^4.18.1"
   },
   "devDependencies": {
     "mocha": "^2.2.4"
